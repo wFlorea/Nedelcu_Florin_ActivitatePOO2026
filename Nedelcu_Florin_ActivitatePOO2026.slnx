@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Nedelcu_Florin_ActivitatePOO2026/Nedelcu_Florin_ActivitatePOO2026.vcxproj" />
+</Solution>
