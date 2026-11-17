@@ -19,7 +19,23 @@ float calculMedieNumereIntregi(int vector[], int dim) {
 	if (dim > 0) {
 		return suma / dim;
 	}
-	return 0; // Return 0 if 
+	return 0; 
+}
+
+void afisareVector(int* vector, int dimensiune) {
+	for (int i = 0; i < dimensiune; i++) {
+		cout << endl << "Vector[" << i << "] = " << vector[i];
+	}
+}
+
+int pozitieMaximInVector(int* vector, int dimensiune) {
+	int pozitieMax = 0;
+	for (int i = 1; i < dimensiune; i++) {
+		if (vector[pozitieMax] < vector[i]) {
+			pozitieMax = i;
+		}
+	}
+	return pozitieMax;
 }
 
 int main() {
@@ -41,6 +57,22 @@ int main() {
 	int dim = 5;
 	cout << endl << "Media este: " << calculMedieNumereIntregi(vector, dim);
 
+	int* vectorNumereIntregi;
+	int dimensiune;
+	cout << endl << "Introdu dimensiunea: ";
+	cin >> dimensiune;
+
+	vectorNumereIntregi = new int[dimensiune];
+	for (int i = 0; i < dimensiune; i++) {
+		cout << endl << "Vector[" << i << "] = ";
+		cin >> vectorNumereIntregi[i];
+	}
+
+	cout << endl << "Valorile din vector sunt: ";
+	afisareVector(vectorNumereIntregi, dimensiune);
+
+	cout << endl << "Pozitia maximului din vector este: " << pozitieMaximInVector(vectorNumereIntregi, dimensiune);
+	delete[] vectorNumereIntregi;
 	return 0;
 }
 
