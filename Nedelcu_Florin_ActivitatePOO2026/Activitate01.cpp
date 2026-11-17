@@ -19,6 +19,7 @@ float calculMedieNumereIntregi(int vector[], int dim) {
 	if (dim > 0) {
 		return suma / dim;
 	}
+	return 0; // Return 0 if 
 }
 
 int main() {
