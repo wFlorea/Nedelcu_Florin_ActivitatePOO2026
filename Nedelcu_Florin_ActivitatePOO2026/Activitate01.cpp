@@ -11,6 +11,16 @@ struct Casa {
 
 void afisareCasa(Casa c);
 
+float calculMedieNumereIntregi(int vector[], int dim) {
+	int suma = 0;
+	for (int i = 0; i < dim; i++) {
+		suma += vector[i];
+	}
+	if (dim > 0) {
+		return suma / dim;
+	}
+}
+
 int main() {
 	cout << "Mata are mere";
 
@@ -25,8 +35,12 @@ int main() {
 
 	delete[] mata.adresa;
 	delete[] mata.proprietar;
-	return 0;
 
+	int vector[] = { 4, 5, 7, 2, 3 };
+	int dim = 5;
+	cout << endl << "Media este: " << calculMedieNumereIntregi(vector, dim);
+
+	return 0;
 }
 
 void afisareCasa(Casa c) {
