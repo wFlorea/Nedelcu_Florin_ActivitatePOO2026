@@ -12,7 +12,7 @@ struct Casa {
 void afisareCasa(Casa c);
 
 float calculMedieNumereIntregi(int vector[], int dim) {
-	int suma = 0;
+	float suma = 0;
 	for (int i = 0; i < dim; i++) {
 		suma += vector[i];
 	}
