@@ -2,80 +2,66 @@
 #include <iostream>
 using namespace std;
 #include <cstring>
+#include <string>
 
-struct Casa {
-	int nr;
-	char* adresa;
-	char* proprietar;
+class Cofetarie {
+private:
+	const int id;
+	string denumire;
+	int nrProduse;
+	float* preturi;
+	int nrAngajati;
+public:
+	static int nrCofetarii;
+	static int totalAngajati;
+	Cofetarie() : id(++nrCofetarii) {
+		this->denumire = "Cofetaria mea";
+		this->nrProduse = 0;
+		this->preturi = nullptr;
+		this->nrAngajati = 3;
+		totalAngajati += nrAngajati;
+	}	
+	Cofetarie(string denumire, int nrProduse, float* preturi, int nrAngajati) : id(++nrCofetarii) {
+		this->denumire = denumire;
+		this->nrProduse = nrProduse;
+		this->preturi = new float[nrProduse];
+		for (int i = 0; i < nrProduse; i++) {
+			this->preturi[i] = preturi[i];
+		}
+		this->nrAngajati = nrAngajati;
+		totalAngajati += nrAngajati;
+	}
+	void afisare() {
+		
+		cout << endl << "-----------------------------------------" << endl;
+		cout << endl << "Cofetaria cu id-ul: " << this->id << endl;
+		cout << endl << "Denumirea: " << this->denumire << endl;
+		cout << endl << "Numarul de produse: " << this->nrProduse << endl;
+		cout << endl << "Preturile produselor: " << endl;
+		for (int i = 0; i < this->nrProduse; i++) {
+			cout << endl << this->preturi[i] << " Lei" << endl;
+		}
+		cout << endl << "Numarul de angajati: " << this->nrAngajati << endl;
+		cout << endl << "Numarul de cofetarii: " << nrCofetarii << endl;
+		cout << endl << "Numarul total de angajati: " << totalAngajati << endl;
+		cout << endl << "-----------------------------------------" << endl;
+	}
 };
 
-void afisareCasa(Casa c);
 
-float calculMedieNumereIntregi(int vector[], int dim) {
-	float suma = 0;
-	for (int i = 0; i < dim; i++) {
-		suma += vector[i];
-	}
-	if (dim > 0) {
-		return suma / dim;
-	}
-	return 0; 
-}
 
-void afisareVector(int* vector, int dimensiune) {
-	for (int i = 0; i < dimensiune; i++) {
-		cout << endl << "Vector[" << i << "] = " << vector[i];
-	}
-}
+int Cofetarie::nrCofetarii = 0;
+int Cofetarie::totalAngajati = 0;
 
-int pozitieMaximInVector(int* vector, int dimensiune) {
-	int pozitieMax = 0;
-	for (int i = 1; i < dimensiune; i++) {
-		if (vector[pozitieMax] < vector[i]) {
-			pozitieMax = i;
-		}
-	}
-	return pozitieMax;
-}
 
 int main() {
-	cout << "Mata are mere";
-
-	Casa mata;
-	mata.nr = 7;
-	mata.adresa = new char[strlen("Strada Bisericii") + 1];
-	strcpy(mata.adresa, "Strada Bisericii");
-	mata.proprietar = new char[strlen("Florea") + 1];
-	strcpy(mata.proprietar, "Florea");
-
-	afisareCasa(mata);
-
-	delete[] mata.adresa;
-	delete[] mata.proprietar;
-
-	int vector[] = { 4, 5, 7, 2, 3 };
-	int dim = 5;
-	cout << endl << "Media este: " << calculMedieNumereIntregi(vector, dim);
-
-	int* vectorNumereIntregi;
-	int dimensiune;
-	cout << endl << "Introdu dimensiunea: ";
-	cin >> dimensiune;
-
-	vectorNumereIntregi = new int[dimensiune];
-	for (int i = 0; i < dimensiune; i++) {
-		cout << endl << "Vector[" << i << "] = ";
-		cin >> vectorNumereIntregi[i];
-	}
-
-	cout << endl << "Valorile din vector sunt: ";
-	afisareVector(vectorNumereIntregi, dimensiune);
-
-	cout << endl << "Pozitia maximului din vector este: " << pozitieMaximInVector(vectorNumereIntregi, dimensiune);
-	delete[] vectorNumereIntregi;
+	Cofetarie c1;
+	float* preturi = new float[3] { 10.5, 12, 33.5};
+	Cofetarie c2("Smecherescu", 3, preturi, 5);
+	Cofetarie principala;
+	c1.afisare();
+	c2.afisare();
+	principala.afisare();
+	delete[] preturi;
 	return 0;
-}
-
-void afisareCasa(Casa c) {
-	cout << endl << "Casa se afla la adresa: " << c.adresa << ", numarul " << c.nr << " are proprietar pe " << c.proprietar << ".";
 }
