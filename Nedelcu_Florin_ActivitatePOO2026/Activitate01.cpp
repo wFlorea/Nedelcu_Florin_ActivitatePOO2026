@@ -22,7 +22,6 @@ public:
 	Playlist(const Playlist& copy) : id(++nrPlaylisturi) {
 		this->nume = copy.nume;
 		this->nrMelodii = copy.nrMelodii;
-		this->durate = new int[copy.nrMelodii];
 		if (copy.durate != nullptr) {
 			this->durate = new int[copy.nrMelodii];
 			for (int i = 0; i < copy.nrMelodii; i++) {
@@ -31,6 +30,20 @@ public:
 		}
 		else {
 			this->durate = nullptr;
+		}
+	}
+	void operator=(const Playlist& copie) {
+		this->nume = copie.nume;
+		this->nrMelodii = copie.nrMelodii;
+		if (this->durate != nullptr) {
+			delete[] this->durate;
+			this->durate = nullptr;
+		}
+		if (copie.durate != nullptr) {
+			this->durate = new int[copie.nrMelodii];
+			for (int i = 0; i < copie.nrMelodii; i++) {
+				this->durate[i] = copie.durate[i];
+			}
 		}
 	}
 	void dubleaza() {
@@ -45,6 +58,7 @@ public:
 		}
 		cout << endl;
 	}
+
 	~Playlist() {
 		cout << endl << "~Playlist ID: " << this->id << " Deleted!";
 		delete[] durate;
@@ -55,15 +69,14 @@ int Playlist::nrPlaylisturi;
 
 int main() {
 	int* durate = new int[7] {3, 4, 3, 2, 2, 4, 7};
+	int* durate2 = new int[2] {5, 6};
 	Playlist p1("Gym", 7, durate);
-	Playlist p2 = p1;
-	Playlist p3 = p2;
-	p2.dubleaza();
-	p1.afisare();
-	p2.afisare();
-	p3.afisare();
-	cout << "Total playlisturi: " << Playlist::nrPlaylisturi;
+	Playlist p3("Chill", 2, durate2);   
+	p3.afisare();                        
+	p3 = p1;                               
+	p3.afisare();                        
 	delete[] durate;
+	delete[] durate2;
 }
 
 
