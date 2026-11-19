@@ -3,121 +3,67 @@
 #include <string>
 using namespace std;
 
-class Cinema {
+class Playlist {
 private:
 	const int id;
 	string nume;
-	int nrFilme;
+	int nrMelodii;
 	int* durate;
 public:
-	static int nrCinematografe;
-	static int totalFilme;
-	Cinema() : id(++nrCinematografe) {
-		this->nume = "Cinema nou";
-		this->nrFilme = 0;
-		this->durate = nullptr;
-		totalFilme += nrFilme;
-	}
-	Cinema(string nume, int nrFilme, int* durate) : id(++nrCinematografe) {
+	static int nrPlaylisturi;
+	Playlist(string nume, int nrMelodii, int* durate) : id(++nrPlaylisturi) {
 		this->nume = nume;
-		this->nrFilme = nrFilme;
-		this->durate = new int[nrFilme];
-		for (int i = 0; i < nrFilme; i++) {
+		this->nrMelodii = nrMelodii;
+		this->durate = new int[nrMelodii];
+		for (int i = 0; i < nrMelodii; i++) {
 			this->durate[i] = durate[i];
 		}
-		totalFilme += nrFilme;
 	}
-	Cinema(const Cinema& copie) : id(++nrCinematografe) {
-		this->nume = copie.nume;
-		this->nrFilme = copie.nrFilme;
-		if (copie.durate != nullptr) {
-			this->durate = new int[copie.nrFilme];
-			for (int i = 0; i < copie.nrFilme; i++) {
-				this->durate[i] = copie.durate[i];
+	Playlist(const Playlist& copy) : id(++nrPlaylisturi) {
+		this->nume = copy.nume;
+		this->nrMelodii = copy.nrMelodii;
+		this->durate = new int[copy.nrMelodii];
+		if (copy.durate != nullptr) {
+			this->durate = new int[copy.nrMelodii];
+			for (int i = 0; i < copy.nrMelodii; i++) {
+				this->durate[i] = copy.durate[i];
 			}
 		}
 		else {
 			this->durate = nullptr;
 		}
-		totalFilme += copie.nrFilme;
+	}
+	void dubleaza() {
+		for (int i = 0; i < nrMelodii; i++) {
+			this->durate[i] *= 2;
+		}
 	}
 	void afisare() {
-		cout << endl << "ID: " << this->id << " | Cinema: " << this->nume << " | Durate: " << endl;
-		for (int i = 0; i < nrFilme; i++) {
-			cout << durate[i] << " | ";
+		cout << "ID: " << this->id << " | Name: " << this->nume << " | Durate: " << endl;
+		for (int i = 0; i < nrMelodii; i++) {
+			cout << this->durate[i] << " | ";
 		}
+		cout << endl;
 	}
-	float durataMedie() {
-		float suma = 0;
-		if (nrFilme > 0) {
-			for (int i = 0; i < nrFilme; i++) {
-				suma += durate[i];
-			}
-			return suma / nrFilme;
-		}
-		else {
-			return 0;
-		}
-		
-	}
-	int celMaiLungFilm() {
-		int maxim = 0;
-		if (nrFilme > 0) {
-			for (int i = 0; i < nrFilme; i++) {
-				if (durate[i] > maxim) {
-					maxim = durate[i];
-				}
-			}
-			return maxim;
-		}
-		return 0;
-	}
-	void adaugaFilm(int durata) {
-		int* durateNoi = new int[nrFilme + 1];
-		for (int i = 0; i < nrFilme; i++) {
-			durateNoi[i] = durate[i];
-		}
-		durateNoi[nrFilme] = durata;
-		delete[] durate;
-		durate = durateNoi;
-		nrFilme++;
-		totalFilme++;
-	}
-	~Cinema() {
+	~Playlist() {
+		cout << endl << "~Playlist ID: " << this->id << " Deleted!";
 		delete[] durate;
 	}
-	
 };
 
-int Cinema::totalFilme = 0;
-int Cinema::nrCinematografe = 0;
+int Playlist::nrPlaylisturi;
 
 int main() {
-	int* durateCity = new int[3] {120, 95, 104};
-	Cinema c1;
-	Cinema c2("Cinema City", 3, durateCity);
-	c1.afisare();
-	cout << "Durata medie: " << c1.durataMedie();
-	cout << " | Cel mai lung film: " << c1.celMaiLungFilm();
-	c1.adaugaFilm(90);
-	c1.afisare();
-	cout << " | Durata Medie: " << c1.durataMedie();
-	cout << " | Cel mai lung film: " << c1.celMaiLungFilm();
-	c2.afisare();
-	cout << "Durata medie: " << c2.durataMedie();
-	cout << " | Cel mai lung film: " << c2.celMaiLungFilm();
-	c2.adaugaFilm(120);
-	c2.afisare();
-	cout << " | Durata Medie: " << c2.durataMedie();
-	cout << " | Cel mai lung film: " << c2.celMaiLungFilm();
-	Cinema c3 = c2;
-	c3.afisare();
-	cout << endl << "Total movies: " << Cinema::totalFilme;
-	c3.adaugaFilm(180);
-	c3.afisare();
-	cout << endl << "Total movies: " << Cinema::totalFilme;
-
-	delete[] durateCity;
+	int* durate = new int[7] {3, 4, 3, 2, 2, 4, 7};
+	Playlist p1("Gym", 7, durate);
+	Playlist p2 = p1;
+	Playlist p3 = p2;
+	p2.dubleaza();
+	p1.afisare();
+	p2.afisare();
+	p3.afisare();
+	cout << "Total playlisturi: " << Playlist::nrPlaylisturi;
+	delete[] durate;
 }
 
 
